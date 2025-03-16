@@ -1,3 +1,9 @@
+import ChartComponent from "../_components/ChartComponent";
+
 export default function Home() {
-  return <></>;
+  return (
+    <main>
+      <ChartComponent />
+    </main>
+  );
 }

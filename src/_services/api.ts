@@ -33,7 +33,8 @@ function processPibData(
     }
 
     if (pibType === "pibTotal") {
-      yearTable[year].totalGdp = value;
+      yearTable[year].totalGdp = (Number(value) / 1000).toFixed(2);
+      console.log(value);
     } else {
       yearTable[year].gdpPerCapita = value;
     }
