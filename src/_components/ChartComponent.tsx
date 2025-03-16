@@ -16,7 +16,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { TrendingUp } from "lucide-react";
 import { useContext } from "react";
 import { LineChart, CartesianGrid, XAxis, Line, YAxis } from "recharts";
 import { chartConfig } from "../_config/chartConfig";
@@ -25,7 +24,7 @@ export default function ChartComponent() {
   const { gdpData } = useContext(DataContext);
 
   return (
-    <Card className="flex flex-col m-5">
+    <Card className="flex flex-col m-5 lg:w-1/2">
       <CardHeader className="justify-center pb-0 text-3xl">
         <CardTitle>Evolução do PIB Brasileiro</CardTitle>
         <CardDescription className="text-center">1996 - 2022</CardDescription>
