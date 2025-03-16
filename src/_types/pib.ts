@@ -1,4 +1,5 @@
-export type PibType = {
+export type GdpDataType = {
   year: string;
-  amount: string;
+  totalGdp?: string;
+  gdpPerCapita?: string;
 };

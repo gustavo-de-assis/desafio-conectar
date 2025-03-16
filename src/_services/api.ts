@@ -1,42 +1,41 @@
-import { PibType } from "@/_types/pib";
+import { GdpDataType } from "@/_types/pib";
 import axios from "axios";
 
-export async function fetchPibTotal(): Promise<PibType[]> {
+const yearTable: { [year: string]: GdpDataType } = {};
+
+export async function fetchGdpData(): Promise<GdpDataType[]> {
   try {
-    const response = await axios.get(
-      process.env.NEXT_PUBLIC_PIB_TOTAL_API_URL!
-    );
+    const response = await axios.get(process.env.NEXT_PUBLIC_PIB_API_URL!);
 
-    const serie = response.data[0]?.resultados?.[0]?.series?.[0]?.serie;
+    const seriePibTotal = response.data[0]?.resultados?.[0]?.series?.[0]?.serie;
+    const seriePerCapita =
+      response.data[1]?.resultados?.[0]?.series?.[0]?.serie;
 
-    return serie
-      ? Object.entries(serie).map(([year, amount]) => ({
-          year,
-          amount: String(amount),
-        }))
-      : [];
+    processPibData(seriePibTotal, "pibTotal");
+    processPibData(seriePerCapita, "pibPerCapita");
+
+    const pibData: GdpDataType[] = Object.values(yearTable);
+
+    return pibData;
   } catch (error) {
-    console.error("Erro ao buscar dados do PIB Total", error);
+    console.error("Erro ao buscar dados da API", error);
     return [];
   }
 }
 
-export async function fetchPerCapita(): Promise<PibType[]> {
-  try {
-    const response = await axios.get(
-      process.env.NEXT_PUBLIC_PIB_PER_CAPITA_API_URL!
-    );
+function processPibData(
+  series: { [year: string]: string },
+  pibType: "pibTotal" | "pibPerCapita"
+): void {
+  Object.entries(series).forEach(([year, value]) => {
+    if (!yearTable[year]) {
+      yearTable[year] = { year, totalGdp: undefined, gdpPerCapita: undefined };
+    }
 
-    const serie = response.data[0]?.resultados?.[0]?.series?.[0]?.serie;
-
-    return serie
-      ? Object.entries(serie).map(([year, amount]) => ({
-          year,
-          amount: String(amount),
-        }))
-      : [];
-  } catch (error) {
-    console.error("Erro ao buscar dados do PIB per Capita", error);
-    return [];
-  }
+    if (pibType === "pibTotal") {
+      yearTable[year].totalGdp = value;
+    } else {
+      yearTable[year].gdpPerCapita = value;
+    }
+  });
 }
