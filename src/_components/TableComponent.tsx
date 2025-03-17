@@ -34,8 +34,8 @@ export default function TableComponent() {
   });
 
   return (
-    <Card className="flex flex-col lg:w-1/2">
-      <CardHeader className="justify-center pb-0 text-3xl">
+    <Card className="flex flex-col m-5 w-full lg:w-3/4 p-4 sm:p-6">
+      <CardHeader className="justify-center pb-0 text-2xl text-center">
         <CardTitle>Evolução do PIB Brasileiro</CardTitle>
         <CardDescription className="text-center">1996 - 2022</CardDescription>
       </CardHeader>
@@ -47,7 +47,7 @@ export default function TableComponent() {
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-center text-[#303672] text-lg"
+                    className="text-center text-[#211C84] text-lg"
                   >
                     {header.isPlaceholder
                       ? null
@@ -79,7 +79,7 @@ export default function TableComponent() {
           )}
         </TableBody>
       </Table>
-      <div className=" flex items-center justify-center space-x-2 py-4">
+      <div className=" flex items-center justify-center gap-2 sm:gap-4 py-4">
         {Array.from({ length: table.getPageCount() }, (_, idx) => (
           <Button
             key={idx}

@@ -5,17 +5,21 @@ export const columns: ColumnDef<GdpDataType>[] = [
   {
     accessorKey: "year",
     header: "Ano",
-    size: 160,
+    size: 100,
     cell: ({ row }) => (
-      <div className="w-10 m-auto">{row.getValue("year")}</div>
+      <div className="text-center whitespace-nowrap min-w-[80px] sm:min-w-[100px]">
+        {row.getValue("year")}
+      </div>
     ),
   },
   {
     accessorKey: "totalGdp",
-    header: "Pib Total (USD bilhões)",
+    header: "Pib Total (USD)",
     size: 200,
     cell: ({ row }) => (
-      <div className="w-10 m-auto">{row.getValue("totalGdp")}</div>
+      <div className="text-center whitespace-nowrap min-w-[120px]">
+        ${row.getValue("totalGdp")} bi
+      </div>
     ),
   },
   {
@@ -23,7 +27,9 @@ export const columns: ColumnDef<GdpDataType>[] = [
     header: "Pib per Capita (USD)",
     size: 200,
     cell: ({ row }) => (
-      <div className="w-20 m-auto">{row.getValue("gdpPerCapita")}</div>
+      <div className="text-center whitespace-nowrap min-w-[120px]">
+        ${row.getValue("gdpPerCapita")}
+      </div>
     ),
   },
 ];

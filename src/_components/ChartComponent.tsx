@@ -24,15 +24,18 @@ export default function ChartComponent() {
   const { gdpData } = useContext(DataContext);
 
   return (
-    <Card className="flex flex-col m-5 lg:w-1/2">
-      <CardHeader className="justify-center pb-0 text-3xl">
+    <Card className="flex flex-col m-5 w-full max-w-4xl">
+      <CardHeader className="justify-center pb-0 text-xl md:text-2xl text-center">
         <CardTitle>Evolução do PIB Brasileiro</CardTitle>
         <CardDescription className="text-center">
           {gdpData.at(0)?.year} - {gdpData.at(gdpData.length - 1)?.year}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer config={chartConfig} className="aspect-auto h-[600px]">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[300px] md:h[400px]"
+        >
           <LineChart
             accessibilityLayer
             data={gdpData}
