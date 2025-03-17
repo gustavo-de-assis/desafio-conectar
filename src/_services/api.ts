@@ -53,7 +53,7 @@ function processPibData(
 ): void {
   Object.entries(series).forEach(([year, value]) => {
     if (!yearTable[year]) {
-      yearTable[year] = { year, totalGdp: undefined, gdpPerCapita: undefined };
+      yearTable[year] = { year, totalGdp: "-", gdpPerCapita: "-" };
     }
 
     if (pibType === "pibTotal") {
