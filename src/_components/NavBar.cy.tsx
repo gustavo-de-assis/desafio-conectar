@@ -1,7 +1,7 @@
 import NavBar from "./NavBar";
 
 describe("Test NavBar component", () => {
-  it("renders", () => {
+  it("should renders", () => {
     cy.mount(<NavBar />);
   });
 });
