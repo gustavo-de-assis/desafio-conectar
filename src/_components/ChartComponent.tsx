@@ -27,7 +27,9 @@ export default function ChartComponent() {
     <Card className="flex flex-col m-5 lg:w-1/2">
       <CardHeader className="justify-center pb-0 text-3xl">
         <CardTitle>Evolução do PIB Brasileiro</CardTitle>
-        <CardDescription className="text-center">1996 - 2022</CardDescription>
+        <CardDescription className="text-center">
+          {gdpData.at(0)?.year} - {gdpData.at(gdpData.length - 1)?.year}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer config={chartConfig} className="aspect-auto h-[600px]">
@@ -78,7 +80,7 @@ export default function ChartComponent() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
-              Fonte de dados:
+              Fonte:
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
               Instituto Brasileiro de Geografia e Estatística (IBGE)
