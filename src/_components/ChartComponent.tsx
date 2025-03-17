@@ -49,7 +49,7 @@ export default function ChartComponent() {
             />
             <YAxis
               scale="log"
-              domain={[500, 100000]}
+              domain={[100, 10000]}
               tickLine={false}
               axisLine={false}
               tickCount={6}

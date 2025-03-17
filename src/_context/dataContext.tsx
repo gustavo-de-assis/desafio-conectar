@@ -27,8 +27,6 @@ export function DataProvider({
     try {
       const data = await fetchGdpData();
       setGdpData(data);
-
-      console.log("pibData:\n", data);
     } catch (error) {
       setError("Falha na busca de dados da api");
       console.error(error);

@@ -1,5 +1,6 @@
 import { GdpDataType } from "@/_types/pib";
 import axios from "axios";
+import { getExchangeRate } from "./currency";
 
 const yearTable: { [year: string]: GdpDataType } = {};
 
@@ -11,8 +12,17 @@ export async function fetchGdpData(): Promise<GdpDataType[]> {
     const seriePerCapita =
       response.data[1]?.resultados?.[0]?.series?.[0]?.serie;
 
-    processPibData(seriePibTotal, "pibTotal");
-    processPibData(seriePerCapita, "pibPerCapita");
+    const exchangeRate = await getExchangeRate();
+
+    const seriePibTotalToUsd = await convertToUsd(seriePibTotal, exchangeRate);
+
+    const seriePerCapitaToUsd = await convertToUsd(
+      seriePerCapita,
+      exchangeRate
+    );
+
+    processPibData(seriePibTotalToUsd, "pibTotal");
+    processPibData(seriePerCapitaToUsd, "pibPerCapita");
 
     const pibData: GdpDataType[] = Object.values(yearTable);
 
@@ -21,6 +31,20 @@ export async function fetchGdpData(): Promise<GdpDataType[]> {
     console.error("Erro ao buscar dados da API", error);
     return [];
   }
+}
+
+async function convertToUsd(
+  series: {
+    [year: string]: string;
+  },
+  exchangeRate: number
+): Promise<{ [year: string]: string }> {
+  return Object.fromEntries(
+    Object.entries(series).map(([year, value]) => [
+      year,
+      String(Number(value) * exchangeRate),
+    ])
+  );
 }
 
 function processPibData(
@@ -34,9 +58,8 @@ function processPibData(
 
     if (pibType === "pibTotal") {
       yearTable[year].totalGdp = (Number(value) / 1000).toFixed(2);
-      console.log(value);
     } else {
-      yearTable[year].gdpPerCapita = value;
+      yearTable[year].gdpPerCapita = Number(value).toFixed(2);
     }
   });
 }
